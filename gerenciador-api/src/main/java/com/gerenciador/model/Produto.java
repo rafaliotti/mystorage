@@ -2,6 +2,7 @@ package com.gerenciador.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,12 +40,15 @@ public class Produto {
 	private String lote;
 	
 	@NotNull
+	@Column(name = "datafabricacao")
 	private Date dataFabricacao;
 	
 	@NotNull
+	@Column(name = "datavalidade")
 	private Date dataValidade;
 	
 	@NotNull
+	@Column(name = "dataregistro")
 	private Date dataRegistro;
 
 	public Long getId() {

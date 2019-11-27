@@ -6,7 +6,7 @@ CREATE TABLE produto(
 	valor Double(10,2) NOT NULL,
 	disponivel Boolean,
 	marca Varchar(20) NOT NULL,
-	distribuidor Varchar(20),
+	distribuidor Varchar(150),
 	lote Varchar(50),
 	dataFabricacao Date NOT NULL,
 	dataValidade Date NOT NULL,

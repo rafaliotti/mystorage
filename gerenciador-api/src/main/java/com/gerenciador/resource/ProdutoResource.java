@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
@@ -21,14 +22,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gerenciador.ProdutoRepository;
-import com.gerenciador.erroMessages.Erro;
+import com.gerenciador.erromessage.Erro;
 import com.gerenciador.event.RecursoCriadoEvent;
 import com.gerenciador.model.Produto;
+import com.gerenciador.repository.ProdutoRepository;
 import com.gerenciador.service.ProdutoInexistenteException;
 
 @RestController
@@ -44,8 +46,21 @@ public class ProdutoResource {
 	@Autowired
 	private MessageSource messages;
 	
+	
+	//descomentar posteriormente
+	
+//	@GetMapping
+//	public ResponseEntity<List<Produto>> buscarProdutos(){
+//		
+//		List<Produto> produtos = this.produtoRepository.filtrarProdutos();
+//		
+//		return ResponseEntity.ok(produtos);
+//	}
+	
+	
+	
 	@GetMapping
-	public ResponseEntity<List<Produto>> buscarProdutos(){
+	public ResponseEntity<List<Produto>> pesquisarProdutos(){
 		
 		List<Produto> produtos = this.produtoRepository.findAll();
 		
@@ -83,6 +98,37 @@ public class ProdutoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Optional<Produto>> atualizarProduto(@PathVariable Long id, @Valid @RequestBody Produto produto){
+		
+		Optional<Produto> produtoSalvo = this.produtoRepository.findById(id);
+		
+		BeanUtils.copyProperties(produto, produtoSalvo.get(), "id");
+		this.produtoRepository.save(produtoSalvo.get());
+		
+		return ResponseEntity.ok(produtoSalvo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@ExceptionHandler({ ProdutoInexistenteException.class })
 	public ResponseEntity<Object> handlerProdutoInexistenteException(ProdutoInexistenteException ex){
 		String mensagemUsuario = messages.getMessage("produto.inexistente", null, LocaleContextHolder.getLocale());
@@ -92,7 +138,7 @@ public class ProdutoResource {
 		
 		return ResponseEntity.badRequest().body(erros);
 	}
-	
+
 	public List<Erro> listaDeErros(BindingResult bindingResult){
 		
 		List<Erro> erros = new ArrayList<>();

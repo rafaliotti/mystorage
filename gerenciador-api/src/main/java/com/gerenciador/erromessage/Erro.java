@@ -1,4 +1,4 @@
-package com.gerenciador.erroMessages;
+package com.gerenciador.erromessage;
 
 public class Erro{
 	

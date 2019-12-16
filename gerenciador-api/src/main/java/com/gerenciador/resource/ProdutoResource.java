@@ -32,6 +32,7 @@ import com.gerenciador.event.RecursoCriadoEvent;
 import com.gerenciador.model.Produto;
 import com.gerenciador.repository.ProdutoRepository;
 import com.gerenciador.service.ProdutoInexistenteException;
+import com.gerenciador.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produtos")
@@ -46,13 +47,16 @@ public class ProdutoResource {
 	@Autowired
 	private MessageSource messages;
 	
+	@Autowired
+	private ProdutoService produtoService;
+	
 	
 	//descomentar posteriormente
 	
 //	@GetMapping
 //	public ResponseEntity<List<Produto>> buscarProdutos(){
 //		
-//		List<Produto> produtos = this.produtoRepository.filtrarProdutos();
+//		List<Produto> produtos = this.produtoService.filtrarProdutos();
 //		
 //		return ResponseEntity.ok(produtos);
 //	}
@@ -68,11 +72,11 @@ public class ProdutoResource {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Produto>> buscarProdutoById(@PathVariable Long id){
+	public ResponseEntity<Produto> buscarProdutoById(@PathVariable Long id){
 		
-		Optional<Produto> produto = this.produtoRepository.findById(id);
+		Produto produto = this.produtoService.buscarProduto(id);
 		
-		return produto.isEmpty() ? ResponseEntity.badRequest().build() : ResponseEntity.ok(produto);
+		return ResponseEntity.ok(produto);
 	}
 	
 	@PostMapping

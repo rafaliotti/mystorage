@@ -1,5 +1,6 @@
 package com.gerenciador.model;
 
+import com.gerenciador.ProdutoTipo;
 import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
@@ -10,7 +11,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Produto_ {
 
 	public static volatile SingularAttribute<Produto, String> marca;
-	public static volatile SingularAttribute<Produto, Integer> tipo;
+	public static volatile SingularAttribute<Produto, ProdutoTipo> tipo;
 	public static volatile SingularAttribute<Produto, Date> dataValidade;
 	public static volatile SingularAttribute<Produto, Date> dataRegistro;
 	public static volatile SingularAttribute<Produto, String> lote;

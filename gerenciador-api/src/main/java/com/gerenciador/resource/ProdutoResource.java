@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,6 +33,7 @@ import com.gerenciador.erromessage.Erro;
 import com.gerenciador.event.RecursoCriadoEvent;
 import com.gerenciador.model.Produto;
 import com.gerenciador.repository.ProdutoRepository;
+import com.gerenciador.repository.filter.ProdutoFilter;
 import com.gerenciador.service.ProdutoInexistenteException;
 import com.gerenciador.service.ProdutoService;
 
@@ -53,29 +56,28 @@ public class ProdutoResource {
 	
 	//descomentar posteriormente
 	
+	@GetMapping
+	public Page<Produto> buscarProdutos(ProdutoFilter produtoFilter, Pageable pageAble){
+
+		return this.produtoRepository.filter(produtoFilter, pageAble);
+	
+	}
+	
+	
+	
 //	@GetMapping
-//	public ResponseEntity<List<Produto>> buscarProdutos(){
+//	public ResponseEntity<List<Produto>> pesquisarProdutos(){
 //		
-//		List<Produto> produtos = this.produtoService.filtrarProdutos();
+//		List<Produto> produtos = this.produtoRepository.findAll();
 //		
 //		return ResponseEntity.ok(produtos);
 //	}
-	
-	
-	
-	@GetMapping
-	public ResponseEntity<List<Produto>> pesquisarProdutos(){
-		
-		List<Produto> produtos = this.produtoRepository.findAll();
-		
-		return ResponseEntity.ok(produtos);
-	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Produto> buscarProdutoById(@PathVariable Long id){
 		
 		Produto produto = this.produtoService.buscarProduto(id);
-		
+					
 		return ResponseEntity.ok(produto);
 	}
 	
@@ -113,22 +115,6 @@ public class ProdutoResource {
 		
 		return ResponseEntity.ok(produtoSalvo);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

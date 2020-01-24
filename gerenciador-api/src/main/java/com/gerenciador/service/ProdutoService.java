@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.gerenciador.ProdutoTipo;
 import com.gerenciador.model.Produto;
 import com.gerenciador.repository.ProdutoRepository;
-import com.gerenciador.repository.filter.PessoaFilter;
+import com.gerenciador.repository.filter.ProdutoFilter;
 
 @Service
 public class ProdutoService {
@@ -17,12 +18,17 @@ public class ProdutoService {
 	private ProdutoRepository produtoRepository;
 	
 	
-	public Optional<Produto> filtrarProdutos(PessoaFilter filter){
-		
-		
-
-		return null;
-	}
+//	public Optional<Produto> filtrarProdutos(ProdutoFilter filter){
+//		
+//		if(ProdutoTipo.PRIMEIRO.toString().equals("PRIMEIRO")) {
+//			System.out.println("TRUE");
+//		}
+//		
+//		
+//		
+//		
+//		return null;
+//	}
 	
 	public Produto buscarProduto(Long id){
 		
